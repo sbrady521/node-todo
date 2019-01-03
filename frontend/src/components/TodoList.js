@@ -1,19 +1,35 @@
 
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles' 
+import { Paper, Grid } from '@material-ui/core';
+import Task from './Task';
 
 const styles = {
     root: {
         flexGrow: 1,
+        width: 600,
+        marginTop: 50,
+        marginRight: 'auto',
+        marginLeft: 'auto',
     },
 };
 
 class TodoList extends React.Component {
     render() {
         const { classes } = this.props
+        const todos = this.props.todos
+
         return (
-            <div className={classes.root}>
-            </div>
+            <Paper className={classes.root}>
+                <Grid container spacing={40}>
+                    {todos.map(todo => (
+                        <Grid item key={todo._id} xs={12}>
+                            <Task taskDetails={todo}/>
+                        </Grid>
+                    ))}
+                </Grid>
+
+            </Paper>
         )
     }
 }

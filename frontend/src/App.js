@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TodoBar from './components/TodoBar'
+import TodoList from './components/TodoList'
 
 const API = 'http://localhost:8000/api/todos/Bean1'
 
@@ -14,7 +15,7 @@ class App extends Component {
     .then(res => res.json())
     .then(
       data => this.setState({
-        data: data,
+        todos: data,
         isLoaded: true
       })
       
@@ -23,12 +24,11 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.isLoaded) {
-      console.log(this.state.data)
-    }
     return (
       <div>
         <TodoBar />
+
+        {this.state.isLoaded && <TodoList todos={this.state.todos}/>}
       </div>
     );
   }
