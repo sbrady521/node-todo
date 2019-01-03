@@ -3,6 +3,8 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles' 
 import { Paper, Grid } from '@material-ui/core';
 import Task from './Task';
+import axios from 'axios'
+
 
 const styles = {
     root: {
@@ -24,7 +26,7 @@ class TodoList extends React.Component {
                 <Grid container spacing={40}>
                     {todos.map(todo => (
                         <Grid item key={todo._id} xs={12}>
-                            <Task taskDetails={todo}/>
+                            <Task taskDetails={todo} />
                         </Grid>
                     ))}
                 </Grid>

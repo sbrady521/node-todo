@@ -16,7 +16,7 @@ module.exports = function(app) {
 	})
 
 	app.get('/api/todo/:id', function(req, res) {
-		Todos.findById(req.params.id , function(err, todo) {
+		Todos.findById(req.params._id , function(err, todo) {
 			if(err) {
 				throw err
 			}
@@ -26,8 +26,8 @@ module.exports = function(app) {
 	})
 
 	app.post('/api/todo', function(req, res) {
-		if(req.body.id) {
-			Todos.findByIdAndUpdate(req.body.id, {
+		if(req.body._id) {
+			Todos.findByIdAndUpdate(req.body._id, {
 				todo: req.body.todo,
 				isDone: req.body.isDone, 
 				hasAttachment: req.body.hasAttachment, 
