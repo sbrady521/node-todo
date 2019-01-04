@@ -1,18 +1,28 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles' 
-import { Typography, Grid } from '@material-ui/core';
-import { Checkbox } from '@material-ui/core';
+import { Typography, Grid, Fade } from '@material-ui/core'
+import { Checkbox } from '@material-ui/core'
 import axios from 'axios'
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
+import AttachFileIcon from '@material-ui/icons/AttachFile'
+import { fade } from '@material-ui/core/styles/colorManipulator'
+
 
 const API = 'http://localhost:8000/api/todo'
 
-const styles = {
+const styles = theme => ({
     root: {
         flexGrow: 1,
         width: 'auto',
         height: 'auto',
+        padding: 20,
     },
-};
+    icon: {
+        margin: theme.spacing.unit,
+        color: fade(theme.palette.common.black, 0.25)
+    },
+});
 
 class Task extends React.Component {
     state = {
@@ -45,6 +55,19 @@ class Task extends React.Component {
     onCheckbox = (event) => {
         this.setState({isDone: event.target.checked}, this.setTaskMongo)
     }
+
+    onAttachFile = () => {
+        console.log("attach file")
+    }
+
+    onDelete = () => {
+        console.log("delete")
+    }
+
+    onEdit = () => {
+        console.log("edit")
+
+    }
     
     render() {
         const { classes } = this.props
@@ -56,10 +79,19 @@ class Task extends React.Component {
                     <Grid item xs={1}>
                         <Checkbox onChange={this.onCheckbox} checked={taskDetails.isDone}/>
                     </Grid>
-                    <Grid item xs={11}>
+                    <Grid item xs={8}>
                         <Typography variant="subheading">
                             {taskDetails.todo}
                         </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <AttachFileIcon className={classes.icon}/>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <DeleteIcon className={classes.icon}/>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <EditIcon className={classes.icon}/> 
                     </Grid>
                 </Grid>
             </div>
