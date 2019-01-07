@@ -55,7 +55,7 @@ module.exports = function(app) {
 	})
 
 	app.delete('/api/todo', function(req, res) {
-		Todos.findByIdAndDelete(req.body.id, function(err) {
+		Todos.findByIdAndDelete(req.body._id, function(err) {
 			if(err) {
 				throw err
 			}

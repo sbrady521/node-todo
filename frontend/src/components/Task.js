@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles' 
-import { Typography, Grid, Fade } from '@material-ui/core'
+import { Typography, Grid, Fade, IconButton } from '@material-ui/core'
 import { Checkbox } from '@material-ui/core'
 import axios from 'axios'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -19,7 +19,6 @@ const styles = theme => ({
         padding: 20,
     },
     icon: {
-        margin: theme.spacing.unit,
         color: fade(theme.palette.common.black, 0.25)
     },
 });
@@ -37,11 +36,11 @@ class Task extends React.Component {
         this.setState(this.props.taskDetails)
     }
 
-    setTaskMongo = () => {
+    standardAPIRequest = (method, data) => {
         axios({
             url: API,
-            method: "POST",
-            data: this.state
+            method: method,
+            data: data 
         })
         .then((response) => {
             console.log(`isDone successfully updated: ${response}`)
@@ -50,6 +49,10 @@ class Task extends React.Component {
             console.error(error)
         })
 
+    }
+
+    setTaskMongo = () => {
+        this.standardAPIRequest('POST', this.state)
     }
 
     onCheckbox = (event) => {
@@ -61,8 +64,10 @@ class Task extends React.Component {
     }
 
     onDelete = () => {
-        console.log("delete")
+        this.standardAPIRequest('DELETE', this.state)
+        this.props.removeTodo(this.state._id)
     }
+    
 
     onEdit = () => {
         console.log("edit")
@@ -85,13 +90,19 @@ class Task extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <AttachFileIcon className={classes.icon}/>
+                        <IconButton aria-label="Delete" >
+                            <AttachFileIcon className={classes.icon}/>
+                        </IconButton>
                     </Grid>
                     <Grid item xs={1}>
-                        <DeleteIcon className={classes.icon}/>
+                        <IconButton aria-label="Delete" >
+                            <EditIcon className={classes.icon}/> 
+                        </IconButton>
                     </Grid>
                     <Grid item xs={1}>
-                        <EditIcon className={classes.icon}/> 
+                        <IconButton aria-label="Delete" onClick={this.onDelete}>
+                            <DeleteIcon className={classes.icon}/>
+                        </IconButton>
                     </Grid>
                 </Grid>
             </div>

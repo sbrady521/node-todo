@@ -16,16 +16,34 @@ const styles = {
 };
 
 class TodoList extends React.Component {
+    state = {
+        todos: []
+    }
+
+    removeTodo = (id) => {
+        let found = -1
+        for(let i = 0 ; i < this.state.todos.length ; i++) {
+            if(this.state.todos[i]._id === id) {
+                console.log("found at " + i)
+                found = i
+                break
+            }
+        }
+        this.setState({
+            todos: this.state.todos.filter((_, i) => i !== found)
+        }, console.log(this.state.todos))
+    }
+
     render() {
         const { classes } = this.props
-        const todos = this.props.todos
+        this.state.todos = this.props.todos
 
         return (
             <Paper className={classes.root}>
                 <Grid container spacing={0}>
-                    {todos.map(todo => (
+                    {this.state.todos.map(todo => (
                         <Grid item key={todo._id} xs={12}>
-                            <Task taskDetails={todo} />
+                            <Task taskDetails={todo} removeTodo={this.removeTodo}/>
                             <Divider />
                         </Grid>
                     ))}
